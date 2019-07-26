@@ -83,7 +83,7 @@ module.exports = {
 
   User: {
     trips: async (_parent, _args, { dataSources }) => {
-      const launchIds = await dataSources.userAPI.getLaunchByIdsByUser();
+      const launchIds = await dataSources.userAPI.getLaunchIdsByUser();
 
       if (!launchIds.length) return [];
 

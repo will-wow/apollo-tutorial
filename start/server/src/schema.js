@@ -22,7 +22,7 @@ const typeDefs = gql`
     bookTrips(launchIds: [ID]!): TripUpdateResponse!
 
     # if false, cancellation failed -- check errors
-    cancelTrip(cancelId: ID!): TripUpdateResponse!
+    cancelTrip(launchId: ID!): TripUpdateResponse!
 
     login(email: String): String # login token
   }

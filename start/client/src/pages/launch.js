@@ -1,49 +1,44 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
-import { LaunchTile, Header, Button, Loading } from "../components";
+import Loading from "../components/loading";
+import Header from "../components/header";
+import ActionButton from "../containers/action-button";
+import LaunchDetail from "../components/launch-detail";
 
-const GET_LAUNCHES = gql`
-  query launchList($after: String) {
-    launches(after: $after) {
-      cursor
-      hasMore
-      launches {
-        id
-        isBooked
-        rocket {
-          id
-          name
-        }
-        mission {
-          name
-          missionPatch
-        }
+import { LAUNCH_TILE_DATA } from "./launches";
+
+export const GET_LAUNCH_DETAILS = gql`
+  query LaunchDetails($launchId: ID!) {
+    launch(id: $launchId) {
+      isInCart @client
+      rocket {
+        type
       }
+      ...LaunchTile
     }
   }
+  ${LAUNCH_TILE_DATA}
 `;
 
-const Launches = () => {
+export default function Launch({ launchId }) {
   return (
-    <Query query={GET_LAUNCHES}>
-      {({ data, loading, error, foo }) => {
+    <Query query={GET_LAUNCH_DETAILS} variables={{ launchId }}>
+      {({ data, loading, error }) => {
         if (loading) return <Loading />;
+        if (error) return <p>ERROR: {error.message}</p>;
 
         return (
-          <>
-            <Header />
-            {data.launches &&
-              data.launches.launches &&
-              data.launches.launches.map(launch => (
-                <LaunchTile key={launch.id} launch={launch} />
-              ))}
-          </>
+          <Fragment>
+            <Header image={data.launch.mission.missionPatch}>
+              {data.launch.mission.name}
+            </Header>
+            <LaunchDetail {...data.launch} />
+            <ActionButton {...data.launch} />
+          </Fragment>
         );
       }}
     </Query>
   );
-};
-
-export default Launches;
+}
