@@ -7,5 +7,7 @@
 			"path": "client"
 		}
 	],
-  "settings": {}
+  "settings": {
+    "javascript.validate.enable": false
+  }
 }
