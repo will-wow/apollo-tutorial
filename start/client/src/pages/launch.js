@@ -28,9 +28,8 @@ const GET_LAUNCHES = gql`
 const Launches = () => {
   return (
     <Query query={GET_LAUNCHES}>
-      {({ data, loading, error }) => {
+      {({ data, loading, error, foo }) => {
         if (loading) return <Loading />;
-        if (error) return <p>ERROR</p>;
 
         return (
           <>
