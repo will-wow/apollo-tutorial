@@ -17,6 +17,16 @@ const typeDefs = gql`
     me: User
   }
 
+  type Mutation {
+    # If false, booking trips failed -- check errors
+    bookTrips(launchIds: [ID]!): TripUpdateResponse!
+
+    # if false, cancellation failed -- check errors
+    cancelTrip(cancelId: ID!): TripUpdateResponse!
+
+    login(email: String): String # login token
+  }
+
   type Rocket {
     id: ID!
     name: String
@@ -31,7 +41,7 @@ const typeDefs = gql`
 
   type Mission {
     name: String
-    missionPatch(size: PatchSize): String
+    missionPatch(mission: String, size: PatchSize): String
   }
 
   enum PatchSize {
@@ -51,16 +61,6 @@ const typeDefs = gql`
     success: Boolean!
     message: String
     launches: [Launch]
-  }
-
-  type Mutation {
-    # If false, booking trips failed -- check errors
-    bookTrips(launchIds: [ID]!): TripUpdateResponse!
-
-    # if false, cancellation failed -- check errors
-    cancelTrip(cancelId: ID!): TripUpdateResponse!
-
-    login(email: String): String # login token
   }
 
   """
