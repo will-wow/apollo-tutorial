@@ -29,7 +29,8 @@
     "eject": "react-scripts eject",
     "format": "npm-run-all -c lint:*",
     "format:eslint": "eslint --fix 'src/**/*.{ts,tsx,js,jsx}'",
-    "lint:prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,scss,md}'"
+    "lint:prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,scss,md}'",
+    "gentypes": "apollo client:codegen --target typescript --clientName=apollo-tutorial-will-wow --endpoint http://localhost:4000"
   },
   "browserslist": [
     ">0.2%",

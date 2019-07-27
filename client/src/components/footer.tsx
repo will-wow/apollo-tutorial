@@ -8,7 +8,7 @@ import { ReactComponent as CartIcon } from "../assets/icons/cart.svg";
 import { ReactComponent as ProfileIcon } from "../assets/icons/profile.svg";
 import { colors, unit } from "../styles";
 
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
     <Container>
       <InnerContainer>
@@ -28,7 +28,9 @@ export default function Footer() {
       </InnerContainer>
     </Container>
   );
-}
+};
+
+export default Footer;
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE

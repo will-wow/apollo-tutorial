@@ -1,6 +1,6 @@
 import React from "react";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import gql from "graphql-tag";
+import { IS_LOGGED_IN } from "../../index";
 
 import {
   renderApollo,
@@ -42,13 +42,7 @@ describe("Login Page", () => {
     await waitForElement(() => getByText(/log in/i));
 
     // check to make sure the cache's contents have been updated
-    const { isLoggedIn } = cache.readQuery({
-      query: gql`
-        {
-          isLoggedIn @client
-        }
-      `
-    });
+    const { isLoggedIn } = cache.readQuery(IS_LOGGED_IN);
 
     expect(isLoggedIn).toBeTruthy();
   });

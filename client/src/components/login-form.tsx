@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled, { css } from "react-emotion";
 import { size } from "polished";
 
@@ -9,15 +9,26 @@ import { ReactComponent as Curve } from "../assets/curve.svg";
 import { ReactComponent as Rocket } from "../assets/rocket.svg";
 import { colors, unit } from "../styles";
 
-export default class LoginForm extends Component {
+interface LoginFormProps {
+  login: (opts: { variables: { email: string } }) => void;
+}
+
+interface LoginFormState {
+  email: string;
+}
+
+export default class LoginForm extends React.Component<
+  LoginFormProps,
+  LoginFormState
+> {
   state = { email: "" };
 
-  onChange = event => {
+  onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const email = event.target.value;
     this.setState(s => ({ email }));
   };
 
-  onSubmit = event => {
+  onSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.props.login({ variables: { email: this.state.email } });
   };
