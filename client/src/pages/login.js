@@ -17,7 +17,7 @@ export default function Login() {
         <Mutation
           mutation={LOGIN_USER}
           onCompleted={({ login }) => {
-            localStorage.setItem('token', login);
+            localStorage.setItem("token", login);
             client.writeData({ data: { isLoggedIn: true } });
           }}
         >

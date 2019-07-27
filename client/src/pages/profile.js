@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import React, { Fragment } from "react";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
 
-import { Loading, Header, LaunchTile } from '../components';
-import { LAUNCH_TILE_DATA } from './launches';
+import { Loading, Header, LaunchTile } from "../components";
+import { LAUNCH_TILE_DATA } from "./launches";
 
 const GET_MY_TRIPS = gql`
   query GetMyTrips {
@@ -20,7 +20,7 @@ const GET_MY_TRIPS = gql`
 
 export default function Profile() {
   return (
-    <Query query={GET_MY_TRIPS} fetchPolicy="network-only"> 
+    <Query query={GET_MY_TRIPS} fetchPolicy="network-only">
       {({ data, loading, error }) => {
         if (loading) return <Loading />;
         if (error) return <p>ERROR: {error.message}</p>;

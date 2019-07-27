@@ -1,7 +1,7 @@
-import React from 'react';
-import { print } from 'graphql';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import gql from 'graphql-tag';
+import React from "react";
+import { print } from "graphql";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import gql from "graphql-tag";
 
 import {
   renderApollo,
@@ -9,44 +9,44 @@ import {
   getByTestId,
   fireEvent,
   waitForElement,
-  render,
-} from '../../test-utils';
-import Profile, { GET_MY_TRIPS } from '../profile';
+  render
+} from "../../test-utils";
+import Profile, { GET_MY_TRIPS } from "../profile";
 
 const mockLaunch = {
-  __typename: 'Launch',
+  __typename: "Launch",
   id: 1,
   isBooked: true,
   rocket: {
-    __typename: 'Rocket',
+    __typename: "Rocket",
     id: 1,
-    name: 'tester',
+    name: "tester"
   },
   mission: {
-    __typename: 'Mission',
+    __typename: "Mission",
     id: 1,
-    name: 'test mission',
-    missionPatch: '/',
-  },
+    name: "test mission",
+    missionPatch: "/"
+  }
 };
 
 const mockMe = {
-  __typename: 'User',
+  __typename: "User",
   id: 1,
-  email: 'a@a.a',
-  trips: [mockLaunch],
+  email: "a@a.a",
+  trips: [mockLaunch]
 };
 
-xdescribe('Profile Page', () => {
+xdescribe("Profile Page", () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('renders profile page', async () => {
+  it("renders profile page", async () => {
     const mocks = [
       {
         request: { query: GET_MY_TRIPS },
-        result: { data: { me: mockMe } },
-      },
+        result: { data: { me: mockMe } }
+      }
     ];
 
     const { getByText } = renderApollo(<Profile />, { mocks });
