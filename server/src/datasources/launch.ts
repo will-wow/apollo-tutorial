@@ -1,4 +1,5 @@
-const { RESTDataSource } = require("apollo-datasource-rest");
+import { RESTDataSource } from "apollo-datasource-rest";
+console.log(RESTDataSource);
 
 class LaunchAPI extends RESTDataSource {
   constructor() {
@@ -18,7 +19,7 @@ class LaunchAPI extends RESTDataSource {
     return this.launchReducer(response[0]);
   }
 
-  getLaunchesByIds({ launchIds }) {
+  getLaunchesByIds({ launchIds }: { launchIds: readonly string[] }) {
     return Promise.all(
       launchIds.map(launchId => this.getLaunchById({ launchId }))
     );
@@ -43,4 +44,4 @@ class LaunchAPI extends RESTDataSource {
   }
 }
 
-module.exports = LaunchAPI;
+export default LaunchAPI;

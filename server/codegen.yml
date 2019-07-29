@@ -1,0 +1,11 @@
+overwrite: true
+schema: ./src/schema.ts
+generates:
+  src/generated/graphql.ts:
+    config:
+      defaultMapper: DeepPartial<{T}>
+      immutableTypes: true
+    plugins:
+      - add: 'import { DeepPartial } from "../types";'
+      - "typescript"
+      - "typescript-resolvers"

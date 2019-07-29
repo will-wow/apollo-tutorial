@@ -1,7 +1,14 @@
-const { DataSource } = require("apollo-datasource");
-const isEmail = require("isemail");
+import { DataSource } from "apollo-datasource";
+import * as isEmail from "isemail";
 
-class UserAPI extends DataSource {
+interface Context {
+  user: any;
+}
+
+class UserAPI extends DataSource<Context> {
+  public store: any;
+  public context: Context;
+
   constructor({ store }) {
     super();
     this.store = store;
@@ -22,7 +29,7 @@ class UserAPI extends DataSource {
    * have to be. If the user is already on the context, it will use that user
    * instead
    */
-  async findOrCreateUser({ email: emailArg } = {}) {
+  async findOrCreateUser({ email: emailArg }: { email?: string } = {}) {
     const email =
       this.context && this.context.user ? this.context.user.email : emailArg;
 
@@ -81,4 +88,4 @@ class UserAPI extends DataSource {
   }
 }
 
-module.exports = UserAPI;
+export default UserAPI;

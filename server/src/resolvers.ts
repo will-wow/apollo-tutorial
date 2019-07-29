@@ -1,6 +1,10 @@
-const { paginateResults } = require("./utils");
+import { paginateResults } from "./utils";
 
-module.exports = {
+import { Resolvers as IResolvers, PatchSize } from "./generated/graphql";
+
+import { DataSources } from "./datasources";
+
+const Resolvers: IResolvers<{ dataSources: DataSources }> = {
   Query: {
     launches: async (_, { pageSize = 20, after }, { dataSources }) => {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
@@ -33,7 +37,11 @@ module.exports = {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
       if (user) return Buffer.from(email).toString("base64");
     },
-    bookTrips: async (_parent, { launchIds }, { dataSources }) => {
+    bookTrips: async (
+      _parent,
+      { launchIds },
+      { dataSources }
+    ): Promise<any> => {
       const results = await dataSources.userAPI.bookTrips({ launchIds });
       const launches = await dataSources.launchAPI.getLaunchesByIds({
         launchIds
@@ -63,13 +71,13 @@ module.exports = {
       return {
         success: true,
         message: "trip cancelled",
-        launches: [launch]
+        launches: [{ ...launch, isBooked: false }]
       };
     }
   },
 
   Mission: {
-    missionPatch: (mission, { size } = { size: "LARGE" }) => {
+    missionPatch: (mission: any, { size } = { size: "LARGE" as PatchSize }) => {
       return size === "SMALL"
         ? mission.missionPatchSmall
         : mission.missionPatchLarge;
@@ -91,3 +99,5 @@ module.exports = {
     }
   }
 };
+
+export default Resolvers;
