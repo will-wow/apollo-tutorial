@@ -1,7 +1,13 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import { get } from "lodash";
 
+import {
+  LaunchList,
+  LaunchListVariables,
+  LaunchList_launches_launches
+} from "./__generated__/LaunchList";
 import { LaunchTile, Header, Button, Loading } from "../components";
 
 export const LAUNCH_TILE_DATA = gql`
@@ -20,7 +26,7 @@ export const LAUNCH_TILE_DATA = gql`
 `;
 
 const GET_LAUNCHES = gql`
-  query launchList($after: String) {
+  query LaunchList($after: String) {
     launches(after: $after) {
       cursor
       hasMore
@@ -34,18 +40,21 @@ const GET_LAUNCHES = gql`
 
 const Launches = () => {
   return (
-    <Query query={GET_LAUNCHES}>
+    <Query<LaunchList, LaunchListVariables> query={GET_LAUNCHES}>
       {({ data, loading, error, fetchMore }) => {
-        if (loading) return <Loading />;
+        if (loading || !data) return <Loading />;
+
+        const launches: LaunchList_launches_launches[] = get(data, [
+          "launches",
+          "launches"
+        ]);
 
         return (
           <>
             <Header />
-            {data.launches &&
-              data.launches.launches &&
-              data.launches.launches.map(launch => (
-                <LaunchTile key={launch.id} launch={launch} />
-              ))}
+            {launches.map(launch => (
+              <LaunchTile key={launch.id} launch={launch} />
+            ))}
             {data.launches && data.launches.hasMore && (
               <Button
                 onClick={() =>
@@ -54,8 +63,8 @@ const Launches = () => {
                       after: data.launches.cursor
                     },
                     updateQuery: (prev, { fetchMoreResult, ...rest }) => {
-                      console.log(fetchMoreResult);
                       if (!fetchMoreResult) return prev;
+
                       return {
                         ...fetchMoreResult,
                         launches: {

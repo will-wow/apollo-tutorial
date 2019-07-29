@@ -10,7 +10,7 @@ import { HttpLink } from "apollo-link-http";
 import { resolvers, typeDefs } from "./resolvers";
 
 import Pages from "./pages";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import injectStyles from "./styles";
 
 const cache = new InMemoryCache();

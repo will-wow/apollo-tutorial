@@ -8,13 +8,13 @@ import {
   fireEvent,
   waitForElement
 } from "../../test-utils";
-import Login, { LOGIN_USER } from "../login";
+import Login, { LOGIN_USER } from "../Login";
 
 describe("Login Page", () => {
   // automatically unmount and cleanup DOM after the test is finished.
-  afterEach(cleanup);
+  afterEach(cleanup);   
 
-  it("renders login page", async () => {
+j
     renderApollo(<Login />);
   });
 
