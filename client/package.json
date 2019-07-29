@@ -32,7 +32,8 @@
     "format": "npm-run-all -c lint:*",
     "format:eslint": "eslint --fix 'src/**/*.{ts,tsx,js,jsx}'",
     "lint:prettier": "prettier --write '**/*.{ts,tsx,js,jsx,json,scss,md}'",
-    "gentypes": "apollo client:codegen --target typescript --tagName=gql --clientName=apollo-tutorial-will-wow --endpoint http://localhost:4000"
+    "gentypes": "apollo client:codegen --target typescript --tagName=gql --clientName=apollo-tutorial-will-wow --endpoint http://localhost:4000",
+    "gen": "graphql-codegen --config codegen.yml"
   },
   "browserslist": [
     ">0.2%",
@@ -41,6 +42,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.4.0",
+    "@graphql-codegen/typescript": "1.4.0",
+    "@graphql-codegen/typescript-operations": "1.4.0",
+    "@graphql-codegen/typescript-react-apollo": "1.4.0",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
     "apollo": "^2.16.2",
@@ -48,6 +53,7 @@
     "eslint-plugin-jest": "^22.6.4",
     "eslint-plugin-prettier": "^3.1.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "@graphql-codegen/introspection": "1.4.0"
   }
 }

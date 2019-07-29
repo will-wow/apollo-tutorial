@@ -1,13 +1,8 @@
 import React from "react";
-import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { get } from "lodash";
 
-import {
-  LaunchList,
-  LaunchListVariables,
-  LaunchList_launches_launches
-} from "./__generated__/LaunchList";
+import { Launch, LaunchListComponent } from "../generated/graphql";
 import { LaunchTile, Header, Button, Loading } from "../components";
 
 export const LAUNCH_TILE_DATA = gql`
@@ -25,7 +20,7 @@ export const LAUNCH_TILE_DATA = gql`
   }
 `;
 
-const GET_LAUNCHES = gql`
+export const GET_LAUNCHES = gql`
   query LaunchList($after: String) {
     launches(after: $after) {
       cursor
@@ -40,14 +35,11 @@ const GET_LAUNCHES = gql`
 
 const Launches = () => {
   return (
-    <Query<LaunchList, LaunchListVariables> query={GET_LAUNCHES}>
+    <LaunchListComponent>
       {({ data, loading, error, fetchMore }) => {
         if (loading || !data) return <Loading />;
 
-        const launches: LaunchList_launches_launches[] = get(data, [
-          "launches",
-          "launches"
-        ]);
+        const launches: Launch[] = get(data, ["launches", "launches"]);
 
         return (
           <>
@@ -85,7 +77,7 @@ const Launches = () => {
           </>
         );
       }}
-    </Query>
+    </LaunchListComponent>
   );
 };
 

@@ -1,11 +1,11 @@
 import React from "react";
-import { Mutation, ApolloConsumer } from "react-apollo";
+import { ApolloConsumer } from "react-apollo";
 import gql from "graphql-tag";
 
-import { LoginUser, LoginUserVariables } from "./__generated__/LoginUser";
+import { LoginUserComponent } from "../generated/graphql";
 import { LoginForm, Loading } from "../components";
 
-const LOGIN_USER = gql`
+export const LOGIN_USER = gql`
   mutation LoginUser($email: String!) {
     login(email: $email)
   }
@@ -15,8 +15,7 @@ export default function Login() {
   return (
     <ApolloConsumer>
       {client => (
-        <Mutation<LoginUser, LoginUserVariables>
-          mutation={LOGIN_USER}
+        <LoginUserComponent
           onCompleted={({ login }) => {
             if (!login) return;
             localStorage.setItem("token", login);
@@ -31,7 +30,7 @@ export default function Login() {
 
             return <LoginForm login={login} />;
           }}
-        </Mutation>
+        </LoginUserComponent>
       )}
     </ApolloConsumer>
   );
